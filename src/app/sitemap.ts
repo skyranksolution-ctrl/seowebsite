@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://skyrank.io";
+  const baseUrl = "https://skyranksolution-bice.vercel.app";
   const routes = [
     "",
     "/about",
