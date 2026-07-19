@@ -12,6 +12,8 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [chatActive, setChatActive] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   const schemaData = {
     "@context": "https://schema.org",
@@ -20,22 +22,36 @@ export default function ContactPage() {
     "description": "Get in touch with our team of SEO experts. Submit our contact form or chat with us on WhatsApp."
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
-      const subject = encodeURIComponent(formData.subject || "SkyRank Solution Inquiry");
-      const body = encodeURIComponent(
-        `Hi SkyRank Solution,\n\nYou have received a new message from your website contact form:\n\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}\n\nBest regards,\n${formData.name}`
-      );
-      
-      // Redirect to pre-filled mail client
-      window.location.href = `mailto:skyranksolution@gmail.com?subject=${subject}&body=${body}`;
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setSending(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
 
       setSubmitted(true);
       setTimeout(() => {
         setSubmitted(false);
         setFormData({ name: "", email: "", subject: "", message: "" });
       }, 3000);
+    } catch (err) {
+      setError("Message send nahi hua. Dobara try karein.");
+      console.error(err);
+    } finally {
+      setSending(false);
     }
   };
 
@@ -136,7 +152,7 @@ export default function ContactPage() {
               {/* Custom Dark Vector Map Mockup */}
               <div className="rounded-2xl border border-white/10 bg-[#0a0f24] overflow-hidden relative h-52">
                 <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
-                
+
                 {/* Simulated Street Lines SVG */}
                 <svg className="w-full h-full opacity-20 absolute inset-0" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <line x1="10" y1="0" x2="10" y2="100" stroke="#ffffff" strokeWidth="1" />
@@ -238,11 +254,16 @@ export default function ContactPage() {
 
                         <button
                           type="submit"
-                          className="w-full inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary py-3 text-xs font-semibold text-white shadow-md hover:bg-opacity-95 transition group"
+                          disabled={sending}
+                          className="w-full inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary py-3 text-xs font-semibold text-white shadow-md hover:bg-opacity-95 transition group disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          <span>Send Message</span>
+                          <span>{sending ? "Sending..." : "Send Message"}</span>
                           <Send className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                         </button>
+
+                        {error && (
+                          <p className="text-red-400 text-xs text-center">{error}</p>
+                        )}
                       </form>
                     </motion.div>
                   ) : (
