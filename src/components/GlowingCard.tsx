@@ -4,12 +4,12 @@ import React, { useRef, useState } from "react";
 
 interface GlowingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  glowColor?: string; // e.g. "rgba(0, 194, 255, 0.15)"
+  glowColor?: string; // e.g. "rgba(0, 95, 255, 0.15)"
 }
 
 export default function GlowingCard({
   children,
-  glowColor = "rgba(0, 102, 255, 0.15)",
+  glowColor = "rgba(0, 95, 255, 0.15)",
   className = "",
   ...props
 }: GlowingCardProps) {
@@ -32,7 +32,7 @@ export default function GlowingCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative overflow-hidden rounded-2xl border border-white/10 bg-[#0a0f24]/50 backdrop-blur-md transition-all duration-300 ${className}`}
+      className={`relative overflow-hidden rounded-2xl border border-[#051A41]/10 bg-white/90 shadow-lg backdrop-blur-md transition-all duration-300 ${className}`}
       {...props}
     >
       {/* Glow Effect */}
@@ -48,3 +48,4 @@ export default function GlowingCard({
     </div>
   );
 }
+

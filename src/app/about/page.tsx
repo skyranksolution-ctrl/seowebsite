@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import GlowingCard from "@/components/GlowingCard";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import { motion } from "framer-motion";
-import { Compass, Eye, Shield, Target, Calendar, Award, Users } from "lucide-react";
+import { Eye, Shield, Target } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -34,49 +34,45 @@ export default function AboutPage() {
     { year: "2026", title: "AI Agent Search Core", desc: "Introduced large language context checkers and automated content briefs matching semantic search engines." },
   ];
 
-  const team = [
-    { name: "Pratik Kanzariya", role: "Co-Founder & Chief SEO Architect", desc: "10+ years scaling e-commerce platforms and technical crawler configurations.", initial: "PK" },
-    { name: "Kartik Chauhan", role: "Co-Founder & Lead Growth Engineer", desc: "Expert in search algorithms, technical index sweeps, and performance scaling.", initial: "KC" },
-  ];
 
   return (
     <>
       <SchemaMarkup data={schemaData} />
       <Navbar />
 
-      <main className="flex-1 bg-[#050816] pt-32 pb-24 overflow-x-hidden relative">
+      <main className="flex-1 bg-[#EBEAFA] pt-32 pb-24 overflow-x-hidden relative text-[#051A41]">
         {/* Ambient background glows */}
-        <div className="glow-sphere bg-primary w-[400px] h-[400px] -top-20 -right-20 opacity-20"></div>
-        <div className="glow-sphere bg-secondary w-[300px] h-[300px] bottom-20 left-10 opacity-15"></div>
-        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none z-0"></div>
+        <div className="glow-sphere bg-[#005FFF] w-[400px] h-[400px] -top-20 -right-20 opacity-15"></div>
+        <div className="glow-sphere bg-[#FF5800] w-[300px] h-[300px] bottom-20 left-10 opacity-15"></div>
+        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-0"></div>
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-            <span className="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-secondary">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#005FFF]/20 bg-[#005FFF]/10 px-3.5 py-1 text-xs font-extrabold text-[#005FFF]">
               About Us
             </span>
-            <h1 className="text-4xl font-extrabold text-white sm:text-5xl">Meet SkyRank Solution</h1>
-            <p className="text-zinc-300 text-base leading-relaxed">
+            <h1 className="text-4xl font-extrabold text-[#051A41] sm:text-5xl">Meet SkyRank Solution</h1>
+            <p className="text-zinc-700 text-base font-medium leading-relaxed max-w-2xl mx-auto">
               We are an AI-powered SEO agency and SaaS platform dedicated to helping modern organizations dominate organic search feeds.
             </p>
           </div>
 
           {/* Mission & Vision Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-28">
-            {values.map((val, idx) => {
+            {values.map((val) => {
               const Icon = val.icon;
               return (
                 <GlowingCard
                   key={val.title}
-                  glowColor="rgba(0, 194, 255, 0.08)"
-                  className="p-8 flex flex-col gap-4 border-white/5 bg-[#0a0f26]/30 text-left"
+                  glowColor="rgba(0, 95, 255, 0.15)"
+                  className="p-8 flex flex-col gap-4 bg-white border border-[#005FFF]/15 shadow-sm hover:shadow-md transition-shadow text-left"
                 >
-                  <div className="rounded-lg bg-primary/10 p-2.5 text-primary w-fit">
+                  <div className="rounded-xl bg-[#005FFF]/10 border border-[#005FFF]/20 p-3 text-[#005FFF] w-fit">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">{val.title}</h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed">{val.text}</p>
+                  <h3 className="text-xl font-bold text-[#051A41]">{val.title}</h3>
+                  <p className="text-xs text-zinc-600 font-medium leading-relaxed">{val.text}</p>
                 </GlowingCard>
               );
             })}
@@ -85,17 +81,17 @@ export default function AboutPage() {
           {/* Our Story & History Timeline */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-28">
             <div className="lg:col-span-5 space-y-6">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-primary">Our Journey</h2>
-              <h3 className="text-3xl font-bold text-white">How We Sparked Rank Automation</h3>
-              <p className="text-zinc-300 text-sm leading-relaxed">
+              <h2 className="text-xs font-bold uppercase tracking-widest text-[#005FFF] bg-[#005FFF]/10 px-3 py-1 rounded-full w-fit border border-[#005FFF]/20">Our Journey</h2>
+              <h3 className="text-3xl font-extrabold text-[#051A41] leading-tight">How We Sparked Rank Automation</h3>
+              <p className="text-zinc-700 text-sm font-medium leading-relaxed">
                 SkyRank Solution began with a simple observation: search engines evolved into semantic models, but standard SEO tools remained stuck in old static word density checks.
               </p>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-sm font-medium leading-relaxed">
                 We developed a proprietary crawler model that scans modern pages, runs NLP mapping parameters, and suggests structural patches in real time. Today, we power organic pipelines for hundreds of businesses globally.
               </p>
             </div>
 
-            <div className="lg:col-span-7 relative border-l border-white/10 pl-6 space-y-8 ml-4 lg:ml-0">
+            <div className="lg:col-span-7 relative border-l-2 border-[#005FFF]/30 pl-6 space-y-8 ml-4 lg:ml-0">
               {milestones.map((milestone, idx) => (
                 <motion.div
                   key={milestone.year}
@@ -106,63 +102,19 @@ export default function AboutPage() {
                   className="relative"
                 >
                   {/* Timeline Node Point */}
-                  <div className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#050816] border border-secondary shadow-[0_0_10px_rgba(0,194,255,0.8)]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+                  <div className="absolute -left-[33px] top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#005FFF] border-2 border-white shadow-md">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white"></span>
                   </div>
                   
-                  <span className="text-xs font-mono font-bold text-secondary">{milestone.year}</span>
-                  <h4 className="text-base font-bold text-white mt-1">{milestone.title}</h4>
-                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{milestone.desc}</p>
+                  <span className="text-xs font-mono font-extrabold text-[#FF5800] bg-[#FF5800]/10 px-2.5 py-0.5 rounded-md border border-[#FF5800]/20">{milestone.year}</span>
+                  <h4 className="text-lg font-bold text-[#051A41] mt-1.5">{milestone.title}</h4>
+                  <p className="text-xs text-zinc-600 font-medium mt-1 leading-relaxed">{milestone.desc}</p>
                 </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Team Section */}
-          <div>
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-primary">The Team</h2>
-              <h3 className="text-3xl font-bold text-white">Led By Search Experts</h3>
-              <p className="text-zinc-400 text-sm">
-                Meet the engineering architects and SEO consultants guiding our clients&apos; growth roadmaps.
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {team.map((member, idx) => (
-                <GlowingCard
-                  key={member.name}
-                  glowColor="rgba(0, 102, 255, 0.08)"
-                  className="p-6 border-white/5 bg-[#070c20]/45 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="h-16 w-16 rounded-2xl bg-gradient-to-tr from-primary to-secondary p-[1px] flex items-center justify-center text-white font-extrabold text-lg mb-6 shadow-md">
-                      <div className="flex h-full w-full items-center justify-center rounded-[15px] bg-[#050816]">
-                        {member.initial}
-                      </div>
-                    </div>
-                    <h4 className="text-base font-bold text-white">{member.name}</h4>
-                    <p className="text-xs text-secondary font-semibold mt-1">{member.role}</p>
-                    <p className="text-xs text-zinc-400 mt-3 leading-relaxed">{member.desc}</p>
-                  </div>
-
-                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
-                    <Link
-                      href="https://linkedin.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-zinc-500 hover:text-white transition"
-                      aria-label={`${member.name} LinkedIn Profile`}
-                    >
-                      <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                    </Link>
-                  </div>
-                </GlowingCard>
-              ))}
-            </div>
-          </div>
         </div>
       </main>
 

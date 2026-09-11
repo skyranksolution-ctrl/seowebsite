@@ -8,10 +8,24 @@ export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       setSubscribed(true);
+      try {
+        await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: "Newsletter Subscriber",
+            email: email,
+            subject: "New SEO Newsletter Subscription",
+            message: `New subscriber email: ${email}`,
+          }),
+        });
+      } catch (err) {
+        console.error(err);
+      }
       setEmail("");
       setTimeout(() => setSubscribed(false), 5000);
     }
@@ -75,25 +89,28 @@ export default function Footer() {
       { name: "Contact Us", href: "/contact" },
     ],
     services: [
-      { name: "Keyword Research", href: "/services#keywords" },
-      { name: "Technical SEO", href: "/services#technical" },
-      { name: "On-Page SEO", href: "/services#onpage" },
-      { name: "AI SEO Optimization", href: "/services#aiseo" },
-      { name: "Link Building", href: "/services#linkbuilding" },
+      { name: "Website Development", href: "/services/website-development" },
+      { name: "Mobile App Development", href: "/services/mobile-app-development" },
+      { name: "Application Development", href: "/services/application-development" },
+      { name: "Server Support", href: "/services/server-support" },
+      { name: "Tunnel & Proxy Services", href: "/services/tunnel-services" },
+      { name: "AI SEO Services", href: "/services/seo-services" },
+      { name: "Technical SEO", href: "/services/technical-seo" },
     ],
     resources: [
-      { name: "SEO Tools (Coming Soon)", href: "/tools" },
+      { name: "SEO SaaS Tools", href: "/tools" },
       { name: "Growth Case Studies", href: "/case-studies" },
-      { name: "SEO Blog", href: "/blog" },
-      { name: "Free SEO Audit", href: "/audit" },
+      { name: "SEO & Tech Blog", href: "/blog" },
+      { name: "Free Instant Audit", href: "/audit" },
+      { name: "Pricing & Plans", href: "/pricing" },
     ],
   };
 
   return (
-    <footer className="relative border-t border-white/10 bg-[#050816] pt-24 pb-12 overflow-hidden">
+    <footer className="relative border-t border-[#005FFF]/20 bg-[#051A41] pt-20 pb-12 overflow-hidden text-white">
       {/* Decorative Glow */}
-      <div className="glow-sphere bg-primary w-[300px] h-[300px] -left-50 -bottom-50 opacity-20"></div>
-      <div className="glow-sphere bg-secondary w-[200px] h-[200px] right-20 bottom-20 opacity-10"></div>
+      <div className="glow-sphere bg-[#005FFF] w-[300px] h-[300px] -left-50 -bottom-50 opacity-20"></div>
+      <div className="glow-sphere bg-[#FF5800] w-[200px] h-[200px] right-20 bottom-20 opacity-15"></div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-4 lg:gap-8">
@@ -101,24 +118,24 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="relative h-9 w-9">
-                <img src="/logo.jpg" alt="SkyRank Solution Logo" className="h-full w-full object-contain rounded-full" />
+                <img src="/logo.jpg" alt="SkyRank Solution Logo" className="h-full w-full object-contain rounded-full border border-[#005FFF]/30" />
               </div>
               <span className="text-xl font-extrabold tracking-tight text-white">
-                SkyRank<span className="text-primary">Solution</span>
+                SkyRank<span className="text-[#005FFF]">Solution</span>
               </span>
             </Link>
-            <p className="text-sm text-zinc-400 max-w-md">
+            <p className="text-sm text-zinc-300 max-w-md">
               AI-Powered SEO solutions that help businesses dominate Google search results. Rank Higher. Grow Faster.
             </p>
-            <div className="space-y-2 text-xs text-zinc-400 pt-2 border-t border-white/5">
+            <div className="space-y-2 text-xs text-zinc-300 pt-2 border-t border-white/10">
               <p className="flex items-center gap-2">
-                <span className="text-primary font-bold">Call:</span>
-                <a href="tel:+919737356415" className="hover:text-white transition">+91 97373 56415</a> / 
-                <a href="tel:+919408626950" className="hover:text-white transition">+91 94086 26950</a>
+                <span className="text-[#FF5800] font-bold">Call:</span>
+                <a href="tel:+919737356415" className="hover:text-[#005FFF] transition">+91 97373 56415</a> / 
+                <a href="tel:+919408626950" className="hover:text-[#005FFF] transition">+91 94086 26950</a>
               </p>
               <p className="flex items-center gap-2">
-                <span className="text-primary font-bold">Email:</span>
-                <a href="mailto:skyranksolution@gmail.com" className="hover:text-white transition">skyranksolution@gmail.com</a>
+                <span className="text-[#FF5800] font-bold">Email:</span>
+                <a href="mailto:skyranksolution@gmail.com" className="hover:text-[#005FFF] transition">skyranksolution@gmail.com</a>
               </p>
             </div>
             <div className="space-y-3 max-w-md">
@@ -127,19 +144,19 @@ export default function Footer() {
               </span>
               <form onSubmit={handleSubmit} className="flex gap-2">
                 <div className="relative flex-1">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your work email"
-                    className="w-full rounded-full border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder-zinc-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition"
+                    className="w-full rounded-full border border-white/20 bg-white/10 py-2.5 pl-10 pr-4 text-sm text-white placeholder-zinc-300 focus:border-[#005FFF] focus:outline-none focus:ring-1 focus:ring-[#005FFF] transition"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-white hover:bg-opacity-90 active:scale-95 transition"
+                  className="inline-flex items-center justify-center rounded-full bg-[#FF5800] hover:bg-[#e04d00] px-5 py-2.5 text-sm font-semibold text-white shadow-md active:scale-95 transition"
                 >
                   {subscribed ? "Subscribed!" : <ArrowRight className="h-4 w-4" />}
                 </button>
@@ -150,11 +167,11 @@ export default function Footer() {
           {/* Quick Links Columns */}
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-2">
             <div>
-              <h3 className="text-sm font-semibold text-white tracking-wider">Company</h3>
+              <h3 className="text-sm font-bold text-white tracking-wider">Company</h3>
               <ul className="mt-4 space-y-2">
                 {links.company.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className="text-sm text-zinc-400 hover:text-white transition">
+                    <Link href={item.href} className="text-sm text-zinc-300 hover:text-[#005FFF] transition">
                       {item.name}
                     </Link>
                   </li>
@@ -162,11 +179,11 @@ export default function Footer() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white tracking-wider">Services</h3>
+              <h3 className="text-sm font-bold text-white tracking-wider">Services</h3>
               <ul className="mt-4 space-y-2">
                 {links.services.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className="text-sm text-zinc-400 hover:text-white transition">
+                    <Link href={item.href} className="text-sm text-zinc-300 hover:text-[#005FFF] transition">
                       {item.name}
                     </Link>
                   </li>
@@ -174,11 +191,11 @@ export default function Footer() {
               </ul>
             </div>
             <div className="col-span-2 sm:col-span-1">
-              <h3 className="text-sm font-semibold text-white tracking-wider">Resources</h3>
+              <h3 className="text-sm font-bold text-white tracking-wider">Resources</h3>
               <ul className="mt-4 space-y-2">
                 {links.resources.map((item) => (
                   <li key={item.name}>
-                    <Link href={item.href} className="text-sm text-zinc-400 hover:text-white transition">
+                    <Link href={item.href} className="text-sm text-zinc-300 hover:text-[#005FFF] transition">
                       {item.name}
                     </Link>
                   </li>
@@ -189,8 +206,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-zinc-500">
+        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-zinc-400">
             &copy; {new Date().getFullYear()} SkyRank Solution. All rights reserved.
           </p>
           <div className="flex gap-4">
@@ -201,7 +218,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-zinc-500 hover:text-white transition-colors"
+                  className="text-zinc-400 hover:text-[#FF5800] transition-colors"
                   aria-label={social.name}
                 >
                   {social.svg}
@@ -209,7 +226,7 @@ export default function Footer() {
               );
             })}
           </div>
-          <div className="flex gap-4 text-xs text-zinc-500">
+          <div className="flex gap-4 text-xs text-zinc-400">
             <Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition">Terms of Service</Link>
           </div>
@@ -218,3 +235,4 @@ export default function Footer() {
     </footer>
   );
 }
+

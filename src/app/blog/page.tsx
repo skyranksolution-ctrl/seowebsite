@@ -6,8 +6,7 @@ import Footer from "@/components/Footer";
 import GlowingCard from "@/components/GlowingCard";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search as SearchIcon, Calendar, Clock, ArrowRight, User } from "lucide-react";
-import Link from "next/link";
+import { Search as SearchIcon, Calendar, Clock, ArrowRight } from "lucide-react";
 
 interface BlogPost {
   title: string;
@@ -26,8 +25,8 @@ const initialPosts: BlogPost[] = [
     date: "July 2, 2026",
     readTime: "6 min read",
     snippet: "Google's search crawler targets Largest Contentful Paint and interaction responsiveness metrics. Review how to compress images and optimize scripts.",
-    author: "Pratik Kanzariya",
-    glowColor: "rgba(0, 102, 255, 0.12)",
+    author: "SkyRank Editorial",
+    glowColor: "rgba(0, 95, 255, 0.15)",
   },
   {
     title: "How Search Generative Experience (SGE) Shifts Organic Flows",
@@ -35,8 +34,8 @@ const initialPosts: BlogPost[] = [
     date: "June 28, 2026",
     readTime: "8 min read",
     snippet: "AI snapshots are appearing directly inside SERPs. Learn the formatting hacks and semantic guidelines needed to optimize matching indexes.",
-    author: "Alex Rivoli",
-    glowColor: "rgba(0, 194, 255, 0.12)",
+    author: "SkyRank Research",
+    glowColor: "rgba(0, 95, 255, 0.15)",
   },
   {
     title: "The Startup Roadmap to Safe Editorial Outreach Link Building",
@@ -44,8 +43,8 @@ const initialPosts: BlogPost[] = [
     date: "June 15, 2026",
     readTime: "5 min read",
     snippet: "Avoid automatic search penances. We explain how we secure high-value links by designing detailed statistical resources for journalists.",
-    author: "Sophia Martinez",
-    glowColor: "rgba(168, 85, 247, 0.12)",
+    author: "SkyRank Team",
+    glowColor: "rgba(255, 88, 0, 0.15)",
   },
   {
     title: "Why Exact Matching Terms Are Dying: Context Research Explained",
@@ -53,8 +52,8 @@ const initialPosts: BlogPost[] = [
     date: "June 10, 2026",
     readTime: "7 min read",
     snippet: "Modern crawler models analyze user search intent, not just keyword counts. Discover how we cluster semantic maps matching real queries.",
-    author: "Pratik Kanzariya",
-    glowColor: "rgba(34, 197, 94, 0.12)",
+    author: "SkyRank Editorial",
+    glowColor: "rgba(0, 95, 255, 0.15)",
   },
 ];
 
@@ -82,33 +81,34 @@ export default function BlogPage() {
       <SchemaMarkup data={schemaData} />
       <Navbar />
 
-      <main className="flex-1 bg-[#050816] pt-32 pb-24 overflow-x-hidden relative">
-        <div className="glow-sphere bg-primary w-[400px] h-[400px] -top-20 -left-20 opacity-20"></div>
-        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none z-0"></div>
+      <main className="flex-1 bg-[#EBEAFA] pt-32 pb-24 overflow-x-hidden relative text-[#051A41]">
+        <div className="glow-sphere bg-[#005FFF] w-[400px] h-[400px] -top-20 -left-20 opacity-15"></div>
+        <div className="glow-sphere bg-[#FF5800] w-[300px] h-[300px] bottom-20 right-10 opacity-15"></div>
+        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-0"></div>
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-secondary">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#005FFF]/20 bg-[#005FFF]/10 px-3.5 py-1 text-xs font-extrabold text-[#005FFF]">
               SEO Insights
             </span>
-            <h1 className="text-4xl font-extrabold text-white sm:text-5xl">SkyRank Industry Blog</h1>
-            <p className="text-zinc-300 text-sm leading-relaxed max-w-xl mx-auto">
-              Read technical search guides, algorithm updates, and AI copywriting templates curated by our research team.
+            <h1 className="text-4xl font-extrabold text-[#051A41] sm:text-5xl">SkyRank Industry Blog</h1>
+            <p className="text-zinc-700 text-sm font-medium leading-relaxed max-w-xl mx-auto">
+              Stay ahead with algorithmic update breakdowns, technical schema guides, and link-building tactics written by our senior SEO engineering team.
             </p>
           </div>
 
           {/* Search & Category Filter */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-5xl mx-auto mb-12">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 max-w-5xl mx-auto mb-12">
             {/* Search Input */}
             <div className="relative w-full md:max-w-xs">
-              <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+              <SearchIcon className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
               <input
                 type="text"
                 placeholder="Search blog guides..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-full border border-white/10 bg-[#0a0f24]/50 py-2 pl-10 pr-4 text-xs text-white placeholder-zinc-500 focus:border-primary focus:outline-none transition"
+                className="w-full rounded-full border border-[#005FFF]/20 bg-white py-2.5 pl-10 pr-4 text-xs font-medium text-[#051A41] placeholder-zinc-400 focus:border-[#005FFF] focus:outline-none shadow-sm transition"
               />
             </div>
 
@@ -118,10 +118,10 @@ export default function BlogPage() {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-all ${
+                  className={`rounded-full px-4 py-1.5 text-xs font-bold transition-all ${
                     selectedCategory === cat
-                      ? "bg-primary text-white border border-primary"
-                      : "bg-white/5 border border-white/10 text-zinc-400 hover:text-white"
+                      ? "bg-[#005FFF] text-white shadow-sm"
+                      : "bg-white border border-[#005FFF]/20 text-zinc-700 hover:text-[#051A41] hover:bg-[#005FFF]/10"
                   }`}
                 >
                   {cat}
@@ -135,7 +135,7 @@ export default function BlogPage() {
             {filteredPosts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <AnimatePresence mode="popLayout">
-                  {filteredPosts.map((post, idx) => (
+                  {filteredPosts.map((post) => (
                     <motion.div
                       key={post.title}
                       layout
@@ -147,34 +147,34 @@ export default function BlogPage() {
                     >
                       <GlowingCard
                         glowColor={post.glowColor}
-                        className="p-6 border-white/5 bg-[#0a0f26]/30 flex flex-col justify-between h-full"
+                        className="p-6 bg-white border border-[#005FFF]/15 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full"
                       >
                         <div className="space-y-4">
-                          <div className="flex items-center justify-between text-[10px] text-zinc-500 font-semibold font-mono">
-                            <span className="rounded bg-primary/10 border border-primary/20 px-2 py-0.5 text-primary uppercase">
+                          <div className="flex items-center justify-between text-[11px] font-semibold">
+                            <span className="rounded-full bg-[#005FFF]/10 border border-[#005FFF]/20 px-3 py-0.5 text-[#005FFF] uppercase tracking-wider text-[10px] font-bold">
                               {post.category}
                             </span>
-                            <div className="flex items-center gap-2">
-                              <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {post.date}</span>
-                              <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {post.readTime}</span>
+                            <div className="flex items-center gap-3 text-zinc-500">
+                              <span className="flex items-center gap-1"><Calendar className="h-3.5 w-3.5 text-[#FF5800]" /> {post.date}</span>
+                              <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5 text-[#005FFF]" /> {post.readTime}</span>
                             </div>
                           </div>
 
-                          <h3 className="text-base font-bold text-white leading-snug mt-3 hover:text-secondary transition cursor-pointer">
+                          <h3 className="text-lg font-bold text-[#051A41] leading-snug mt-2 hover:text-[#005FFF] transition cursor-pointer">
                             {post.title}
                           </h3>
-                          <p className="text-xs text-zinc-400 leading-relaxed mt-2">{post.snippet}</p>
+                          <p className="text-xs text-zinc-600 font-medium leading-relaxed mt-2">{post.snippet}</p>
                         </div>
 
                         {/* Author & Read More */}
-                        <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
-                          <div className="flex items-center gap-2 text-xs text-zinc-400">
-                            <div className="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center font-bold text-[10px]">
+                        <div className="flex items-center justify-between mt-6 pt-4 border-t border-zinc-100">
+                          <div className="flex items-center gap-2 text-xs font-semibold text-zinc-700">
+                            <div className="h-7 w-7 rounded-full bg-[#005FFF]/10 border border-[#005FFF]/20 text-[#005FFF] flex items-center justify-center font-bold text-[10px]">
                               {post.author.split(" ").map(n => n[0]).join("")}
                             </div>
                             <span>{post.author}</span>
                           </div>
-                          <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-secondary transition cursor-pointer group">
+                          <span className="inline-flex items-center gap-1 text-xs font-bold text-[#005FFF] hover:text-[#FF5800] transition cursor-pointer group">
                             Read Guide <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                           </span>
                         </div>
@@ -184,8 +184,8 @@ export default function BlogPage() {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="text-center py-20 border border-dashed border-white/10 rounded-2xl bg-white/5">
-                <span className="text-sm text-zinc-500">No blog guides matching search terms found.</span>
+              <div className="text-center py-16 border border-dashed border-[#005FFF]/20 rounded-2xl bg-white p-8">
+                <span className="text-sm font-semibold text-zinc-600">No blog guides matching search terms found.</span>
               </div>
             )}
           </div>
@@ -195,20 +195,20 @@ export default function BlogPage() {
             <div className="flex justify-center gap-2 mt-16">
               <button
                 onClick={() => setCurrentPage(1)}
-                className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${
+                className={`rounded-xl px-4 py-2 text-xs font-bold transition ${
                   currentPage === 1
-                    ? "bg-primary border-primary text-white"
-                    : "bg-white/5 border-white/10 text-zinc-400 hover:text-white"
+                    ? "bg-[#005FFF] text-white shadow-sm"
+                    : "bg-white border border-[#005FFF]/20 text-zinc-700 hover:bg-[#005FFF]/10"
                 }`}
               >
                 1
               </button>
               <button
                 onClick={() => setCurrentPage(2)}
-                className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${
+                className={`rounded-xl px-4 py-2 text-xs font-bold transition ${
                   currentPage === 2
-                    ? "bg-primary border-primary text-white"
-                    : "bg-white/5 border-white/10 text-zinc-400 hover:text-white"
+                    ? "bg-[#005FFF] text-white shadow-sm"
+                    : "bg-white border border-[#005FFF]/20 text-zinc-700 hover:bg-[#005FFF]/10"
                 }`}
               >
                 2

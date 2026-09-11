@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import GlowingCard from "@/components/GlowingCard";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, BarChart2, CheckCircle2, ChevronRight, HelpCircle, FileText } from "lucide-react";
+import { ChevronRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 interface CaseStudy {
@@ -37,7 +37,7 @@ const cases: CaseStudy[] = [
       "Conducted outreach for contextual editorial backlink assets.",
     ],
     outcome: "Signups grew from 1,200/mo to 4,100/mo in 120 days. Gained #1 spots for 80+ high-traffic developer keywords.",
-    glowColor: "rgba(0, 102, 255, 0.15)",
+    glowColor: "rgba(0, 95, 255, 0.15)",
   },
   {
     slug: "ecom-universe",
@@ -53,7 +53,7 @@ const cases: CaseStudy[] = [
       "Automated Product Schema JSON-LD code outputs.",
     ],
     outcome: "Lighthouse mobile score reached 98/100. Organic revenue increased by $145K monthly within a 6-month indexing term.",
-    glowColor: "rgba(0, 194, 255, 0.15)",
+    glowColor: "rgba(0, 95, 255, 0.15)",
   },
   {
     slug: "fintech-prime",
@@ -69,7 +69,7 @@ const cases: CaseStudy[] = [
       "Secured editorial links across high-authority financial blogs.",
     ],
     outcome: "Domain Rating scaled from 42 to 64. Organic Customer Acquisition Cost (CAC) decreased by 54% over two quarters.",
-    glowColor: "rgba(168, 85, 247, 0.15)",
+    glowColor: "rgba(255, 88, 0, 0.15)",
   },
 ];
 
@@ -90,18 +90,19 @@ export default function CaseStudiesPage() {
       <SchemaMarkup data={schemaData} />
       <Navbar />
 
-      <main className="flex-1 bg-[#050816] pt-32 pb-24 overflow-x-hidden relative">
-        <div className="glow-sphere bg-primary w-[400px] h-[400px] -top-20 -left-20 opacity-20"></div>
-        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none z-0"></div>
+      <main className="flex-1 bg-[#EBEAFA] pt-32 pb-24 overflow-x-hidden relative text-[#051A41]">
+        <div className="glow-sphere bg-[#005FFF] w-[400px] h-[400px] -top-20 -left-20 opacity-15"></div>
+        <div className="glow-sphere bg-[#FF5800] w-[300px] h-[300px] bottom-20 right-10 opacity-15"></div>
+        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-0"></div>
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-secondary">
-              Growth roadmaps
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#005FFF]/20 bg-[#005FFF]/10 px-3.5 py-1 text-xs font-extrabold text-[#005FFF]">
+              Growth Roadmaps
             </span>
-            <h1 className="text-4xl font-extrabold text-white sm:text-5xl">Growth Case Studies</h1>
-            <p className="text-zinc-300 text-sm leading-relaxed max-w-xl mx-auto">
+            <h1 className="text-4xl font-extrabold text-[#051A41] sm:text-5xl">Growth Case Studies</h1>
+            <p className="text-zinc-700 text-sm font-medium leading-relaxed max-w-xl mx-auto">
               Read how SkyRank Solution engineers resolved index errors, built high-value keyword structures, and drove conversions.
             </p>
           </div>
@@ -110,22 +111,26 @@ export default function CaseStudiesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left selector buttons */}
             <div className="lg:col-span-4 space-y-3">
-              <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest block mb-2 px-2">Select Campaign</span>
+              <span className="text-[11px] font-bold text-[#051A41] uppercase tracking-widest block mb-2 px-1">Select Campaign</span>
               {cases.map((c) => (
                 <button
                   key={c.slug}
                   onClick={() => setSelectedCase(c.slug)}
-                  className={`w-full text-left rounded-xl p-4 transition border ${
+                  className={`w-full text-left rounded-2xl p-5 transition border ${
                     selectedCase === c.slug
-                      ? "bg-primary/10 border-primary text-white shadow-[0_0_15px_rgba(0,102,255,0.1)]"
-                      : "bg-[#0a0f26]/40 border-white/5 text-zinc-400 hover:text-white"
+                      ? "bg-[#005FFF] border-[#005FFF] text-white shadow-md"
+                      : "bg-white border-[#005FFF]/15 text-[#051A41] hover:border-[#005FFF]/40 shadow-sm"
                   }`}
                 >
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">{c.category}</span>
-                  <h4 className="text-sm font-bold mt-1">{c.client}</h4>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs text-green-400 font-semibold">{c.growthMetric}</span>
-                    <ChevronRight className={`h-4 w-4 text-zinc-500 transition-transform ${selectedCase === c.slug ? "translate-x-1" : ""}`} />
+                  <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full inline-block ${
+                    selectedCase === c.slug ? "bg-white/20 text-white" : "bg-[#005FFF]/10 text-[#005FFF]"
+                  }`}>
+                    {c.category}
+                  </span>
+                  <h4 className="text-base font-bold mt-2">{c.client}</h4>
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-black/5">
+                    <span className={`text-xs font-bold ${selectedCase === c.slug ? "text-white" : "text-green-600"}`}>{c.growthMetric}</span>
+                    <ChevronRight className={`h-4 w-4 transition-transform ${selectedCase === c.slug ? "translate-x-1 text-white" : "text-zinc-400"}`} />
                   </div>
                 </button>
               ))}
@@ -141,38 +146,38 @@ export default function CaseStudiesPage() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <GlowingCard glowColor={activeCase.glowColor} className="p-8 border-white/5 bg-[#0a0f26]/50">
+                  <GlowingCard glowColor={activeCase.glowColor} className="p-8 bg-white border border-[#005FFF]/15 shadow-md">
                     <div className="space-y-6">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/5 pb-4 gap-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-zinc-100 pb-5 gap-4">
                         <div>
-                          <span className="text-xs text-primary font-bold uppercase tracking-wider">{activeCase.category}</span>
-                          <h2 className="text-2xl font-extrabold text-white mt-1">{activeCase.title}</h2>
+                          <span className="text-xs text-[#005FFF] font-extrabold uppercase tracking-wider bg-[#005FFF]/10 px-3 py-1 rounded-full border border-[#005FFF]/20">{activeCase.category}</span>
+                          <h2 className="text-2xl font-extrabold text-[#051A41] mt-2.5">{activeCase.title}</h2>
                         </div>
-                        <div className="rounded-xl bg-gradient-to-r from-primary/20 to-secondary/15 border border-primary/30 px-4 py-2 shrink-0 text-center">
-                          <span className="text-[10px] text-zinc-400 uppercase tracking-widest block font-mono">Result</span>
-                          <span className="text-base font-bold text-green-400">{activeCase.growthMetric}</span>
+                        <div className="rounded-2xl bg-[#EBEAFA] border border-[#005FFF]/20 px-5 py-2.5 shrink-0 text-center">
+                          <span className="text-[10px] text-zinc-500 uppercase tracking-widest block font-bold">Result</span>
+                          <span className="text-base font-extrabold text-green-600">{activeCase.growthMetric}</span>
                         </div>
                       </div>
 
-                      <p className="text-sm text-zinc-300 italic font-medium leading-relaxed">
+                      <p className="text-sm text-zinc-700 italic font-semibold leading-relaxed">
                         &ldquo;{activeCase.subtitle}&rdquo;
                       </p>
 
                       {/* Challenge */}
                       <div className="space-y-2">
-                        <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">The Challenge:</span>
-                        <p className="text-xs text-zinc-300 leading-relaxed bg-[#050816]/30 rounded-lg p-3 border border-white/5">
+                        <span className="text-xs font-bold text-[#051A41] uppercase tracking-wider block">The Challenge:</span>
+                        <p className="text-xs text-zinc-700 font-medium leading-relaxed bg-[#EBEAFA]/60 rounded-xl p-4 border border-[#005FFF]/10">
                           {activeCase.challenge}
                         </p>
                       </div>
 
                       {/* Strategy */}
                       <div className="space-y-3">
-                        <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Applied SkyRank Strategy:</span>
+                        <span className="text-xs font-bold text-[#051A41] uppercase tracking-wider block">Applied SkyRank Strategy:</span>
                         <div className="space-y-2">
                           {activeCase.strategy.map((item, idx) => (
-                            <div key={idx} className="flex items-start gap-2.5 text-xs text-zinc-300">
-                              <CheckCircle2 className="h-4 w-4 text-secondary shrink-0 mt-0.5" />
+                            <div key={idx} className="flex items-start gap-2.5 text-xs text-zinc-700 font-medium">
+                              <CheckCircle2 className="h-4 w-4 text-[#005FFF] shrink-0 mt-0.5" />
                               <span>{item}</span>
                             </div>
                           ))}
@@ -180,9 +185,9 @@ export default function CaseStudiesPage() {
                       </div>
 
                       {/* Outcome */}
-                      <div className="space-y-2 border-t border-white/5 pt-6">
-                        <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Business Outcome:</span>
-                        <p className="text-xs text-zinc-300 leading-relaxed bg-primary/5 border border-primary/20 rounded-lg p-3">
+                      <div className="space-y-2 border-t border-zinc-100 pt-5">
+                        <span className="text-xs font-bold text-[#051A41] uppercase tracking-wider block">Business Outcome:</span>
+                        <p className="text-xs text-zinc-800 font-semibold leading-relaxed bg-green-50 border border-green-200 rounded-xl p-4">
                           {activeCase.outcome}
                         </p>
                       </div>
@@ -190,10 +195,10 @@ export default function CaseStudiesPage() {
                       <div className="pt-4 flex justify-end">
                         <Link
                           href="/contact"
-                          className="rounded-full bg-primary px-6 py-2.5 text-xs font-semibold text-white hover:bg-opacity-95 shadow-md flex items-center gap-1.5 transition"
+                          className="rounded-full bg-[#FF5800] hover:bg-[#e04d00] px-7 py-3 text-xs font-bold text-white shadow-md hover:scale-105 active:scale-95 flex items-center gap-2 transition"
                         >
                           <span>Replicate These Results</span>
-                          <ChevronRight className="h-3.5 w-3.5" />
+                          <ChevronRight className="h-4 w-4" />
                         </Link>
                       </div>
                     </div>

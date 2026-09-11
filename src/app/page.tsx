@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -10,6 +11,7 @@ import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import AuditForm from "@/components/AuditForm";
 import FAQAccordion from "@/components/FAQAccordion";
 import PricingSection from "@/components/PricingSection";
+import PartnerLogos from "@/components/PartnerLogos";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import {
   Search,
@@ -29,81 +31,93 @@ import {
   FileText,
   MousePointer,
   CheckCircle,
-  Bookmark,
+  XCircle,
   Activity,
   Award,
   Clock,
   ThumbsUp,
   ShieldCheck,
-  UserCheck
+  UserCheck,
+  Building2,
+  Users,
+  MessageSquare,
+  ChevronRight,
+  PhoneCall
 } from "lucide-react";
 
 export default function Home() {
-  // Schema data for SEO Organization
+  const [heroUrl, setHeroUrl] = useState("");
+
+  const handleHeroSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (heroUrl) {
+      try {
+        await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: "Homepage Proposal Request",
+            email: "proposal-request@skyrank.io",
+            subject: `Free Growth Proposal Request for ${heroUrl}`,
+            message: `Website URL submitted from Hero Section: ${heroUrl}`,
+          }),
+        });
+      } catch (err) {
+        console.error(err);
+      }
+      window.location.href = `/audit?url=${encodeURIComponent(heroUrl)}`;
+    }
+  };
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "SkyRank Solution",
     "url": "https://skyrank.io",
     "logo": "https://skyrank.io/logo.png",
-    "description": "AI-Powered SEO Agency + SEO SaaS Platform. Rank Higher. Grow Faster.",
+    "description": "India's Best Digital Marketing & AI SEO Agency | 360* Digital Marketing Solutions",
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+1-800-555-RANK",
+      "telephone": "+91-97373-56415",
       "contactType": "Customer Support"
     },
     "sameAs": [
       "https://linkedin.com",
       "https://twitter.com",
-      "https://youtube.com"
+      "https://instagram.com"
     ]
   };
 
+
   const services = [
-    { title: "Keyword Research", icon: Search, desc: "Unlock thousands of high-traffic, low-difficulty search terms analyzed by our semantic AI engine." },
-    { title: "Technical SEO", icon: Cpu, desc: "Crawl and diagnostic engines that find indexation, rendering, and structured data crawl blocks instantly." },
-    { title: "On Page SEO", icon: Target, desc: "Optimize title tags, headings, content structure, and internal link assets matching target search queries." },
-    { title: "Off Page SEO", icon: Globe, desc: "Increase search trust signals through brand authority building and strategic mention placements." },
-    { title: "Local SEO", icon: MapPin, desc: "Dominate Google Maps and local search packs for all business branches, driving foot traffic." },
-    { title: "Ecommerce SEO", icon: ShoppingBag, desc: "Optimize category filters, product listings, and merchant feeds to drive buyer intent traffic." },
-    { title: "AI SEO Optimization", icon: Sparkles, desc: "Automate code schema generation and semantic context enhancement using state-of-the-art AI models." },
-    { title: "Content Marketing", icon: FileText, desc: "Draft high-converting SEO copy engineered for humans and designed to rank on Google search feeds." },
-    { title: "Link Building", icon: LinkIcon, desc: "Safely secure premium authority backlinks through white-hat editorial outreach and context relations." },
-    { title: "Website Speed", icon: Zap, desc: "Optimize Core Web Vitals, images, caching systems, and page rendering, achieving a 100 Lighthouse score." },
-    { title: "Google Business", icon: Award, desc: "Automate citation syncing, reviews routing, and Google Business Profile optimizations." },
-    { title: "SEO Consultation", icon: HelpCircle, desc: "Receive direct strategic roadmaps from real enterprise growth architects and specialists." },
+    { title: "AI Search Engine Optimization", href: "/services/seo-services", icon: Search, desc: "Dominate Google search results with certified SEO managers and AI-driven keyword rank strategies." },
+    { title: "Website Development", href: "/services/website-development", icon: Globe, desc: "Ultra-fast custom websites & web applications built with Next.js, React, and 100/100 Core Web Vitals." },
+    { title: "Mobile App Development", href: "/services/mobile-app-development", icon: Cpu, desc: "Native & cross-platform Android and iOS mobile applications built with Flutter and React Native." },
+    { title: "Application Development (SaaS)", href: "/services/application-development", icon: Layers, desc: "Custom multi-tenant cloud software, SaaS platforms, and enterprise CRM solutions." },
+    { title: "Server Support & DevOps", href: "/services/server-support", icon: BarChart, desc: "24/7 Linux & Windows server monitoring, cloud infrastructure support, security hardening, and backups." },
+    { title: "Technical SEO & Speed", href: "/services/technical-seo", icon: Target, desc: "Fix crawl roadblocks, Javascript rendering bottlenecks, schema tags, and Core Web Vitals speed scores." },
   ];
 
-  const whyChooseUs = [
-    { title: "AI Powered Engine", desc: "Automate keyword clustering, audits, and content audits with advanced LLMs.", icon: Cpu },
-    { title: "500+ Rank Factors", desc: "Our platform tests pages against hundreds of search variables every single day.", icon: Layers },
-    { title: "Transparent Reports", desc: "Access clean, readable dashboards showing exact ranking growths and metrics.", icon: BarChart },
-    { title: "Daily Live Tracking", desc: "No more waiting weeks for report updates. View SERP changes in real time.", icon: Activity },
-    { title: "Real SEO Experts", desc: "Partner with industry engineers who have scaled enterprise platforms.", icon: UserCheck },
-    { title: "100% White Hat", desc: "Safe, long-term search growth that strictly complies with Google guidelines.", icon: ShieldCheck },
-    { title: "24/7 Client Support", desc: "Enjoy round-the-clock chat assistance and technical support whenever needed.", icon: Clock },
-    { title: "Affordable Pricing", desc: "Premium capabilities and expert consulting plans that scale with business size.", icon: ThumbsUp },
+  const stats = [
+    { value: "2L+", label: "Keyword Rank Boosted" },
+    { value: "700+", label: "Successful Projects" },
+    { value: "5.5M", label: "Organic Traffic Generated" },
+    { value: "1,281", label: "Happy Clients Worldwide" },
   ];
 
-  const features = [
-    { title: "Live Rank Tracking", desc: "Monitor daily keyword position fluctuations on global or local zip levels." },
-    { title: "Competitor Analysis", desc: "Discover competing domains' backlink portfolios and traffic-generating pages." },
-    { title: "Website Audit Scanner", desc: "Instantly analyze technical issues, index blocks, and accessibility scores." },
-    { title: "Keyword Explorer", desc: "Unlock semantic keyword groups, search intents, and volume statistics." },
-    { title: "Backlink Monitoring", desc: "Analyze raw referring domains, toxic links, and anchor distribution trends." },
-    { title: "AI Content Drafts", desc: "Draft fully-optimized outlines and content briefs targeting search queries." },
-    { title: "Schema.org Generator", desc: "Generate JSON-LD FAQ, LocalBusiness, and Product structured schemas." },
-    { title: "Core Web Vitals Tracker", desc: "Track Largest Contentful Paint, interaction delays, and layout shifts." },
-    { title: "Google Console Sync", desc: "Pull search queries and impressions straight into your central dashboard." },
-    { title: "Google Analytics Integration", desc: "Cross-reference rank increases with actual revenue and user conversions." },
+  const timeline = [
+    { year: "2011", title: "21st-Century Agency", desc: "Recognizing digital marketing gaps, founders Deepak & Sumit partnered to launch SkyRank Solution." },
+    { year: "2013", title: "Team Expansion", desc: "SkyRank expanded operations to 10+ core members, scaling traffic for over 55+ businesses." },
+    { year: "2015", title: "Move to Gurugram", desc: "Shifted main headquarters to Welldone Tech Park, Millennium City Gurugram." },
+    { year: "2017", title: "New Benchmarks", desc: "Crossed 350+ active enterprise accounts with a 50+ member specialist team." },
+    { year: "2021", title: "Expansion to Dubai & Global", desc: "Established UAE branch in Prism Tower, Business Bay Dubai for international growth." },
   ];
 
   const faqs = [
-    { question: "How does SkyRank differ from traditional SEO agencies?", answer: "SkyRank combines high-touch consulting from expert SEO architects with our automated SaaS platform. This gives you deep technical insights, daily keyword tracking, and automated AI code schema injections that typical manual agencies cannot match." },
-    { question: "How long does it take to see organic rank increases?", answer: "While traditional SEO can take 3 to 6 months, our AI optimizations and technical speed patches often yield positive indexing updates and SERP shifts within 4 to 8 weeks." },
-    { question: "Does SkyRank comply with Google's guidelines?", answer: "Absolutely. We strictly enforce 100% white-hat SEO practices, focusing on page load times, proper schema structured data, semantic context mapping, and organic authority link outreach." },
-    { question: "Can I cancel or change my pricing plan anytime?", answer: "Yes, you can upgrade, downgrade, or cancel your subscription at any point from your billing panel. Upgrading immediately unlocks higher keyword tracking capacities." },
-    { question: "Is the Free SEO Audit report personalized?", answer: "Yes! Our crawler scans your target domain metadata, speed signals, and indexing flags in real time to generate unique recommendations." },
+    { question: "How does SkyRank Solution differ from traditional SEO agencies?", answer: "SkyRank Solution combines high-touch strategic consulting with an AI-powered SaaS platform. This gives you live daily rank updates, technical speed optimizations, and automated schema code injections that legacy agencies cannot provide." },
+    { question: "How long does it take to see positive ranking results?", answer: "While traditional SEO requires 3 to 6 months, our technical speed patches, AI content briefs, and editorial outreach frequently yield SERP improvements within 4 to 8 weeks." },
+    { question: "Does SkyRank Solution comply with Google's guidelines?", answer: "Yes, 100%. We strictly enforce white-hat SEO practices focusing on Core Web Vitals, JSON-LD schema markup, high-context link building, and user intent optimization." },
+    { question: "Can I get a custom digital marketing proposal for my business?", answer: "Absolutely! Enter your URL in our audit tool or submit a contact request, and our senior growth architects will send a personalized growth roadmap within 24 hours." },
   ];
 
   return (
@@ -111,71 +125,70 @@ export default function Home() {
       <SchemaMarkup data={organizationSchema} />
       <Navbar />
 
-      <main className="flex-1 bg-[#050816] pt-24 overflow-x-hidden relative">
-        {/* Ambient Glow Orbs */}
-        <div className="glow-sphere bg-primary w-[500px] h-[500px] -top-40 -left-60 opacity-30"></div>
-        <div className="glow-sphere bg-secondary w-[400px] h-[400px] top-60 right-20 opacity-20"></div>
-
-        {/* Grid Overlay background */}
-        <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-0"></div>
-
+      <main className="flex-1 bg-[#EBEAFA] text-[#051A41] pt-28 overflow-x-hidden relative">
         {/* HERO SECTION */}
-        <section className="relative z-10 mx-auto max-w-7xl px-4 pt-16 pb-24 sm:px-6 lg:px-8">
+        <section className="relative z-10 mx-auto max-w-7xl px-4 pt-8 pb-20 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Hero Text */}
-            <div className="lg:col-span-6 space-y-8 text-center lg:text-left">
+            <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-secondary"
+                className="inline-flex items-center gap-2 rounded-full border border-[#005FFF]/20 bg-[#005FFF]/10 px-4 py-1.5 text-xs font-extrabold text-[#005FFF]"
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                <span>Next-Gen SEO Platform</span>
+                <span>India's #1 Digital Marketing & AI SEO Agency</span>
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl"
+                className="text-4xl font-extrabold tracking-tight text-[#051A41] sm:text-5xl lg:text-6xl leading-tight"
               >
-                Rank Higher.
-                <span className="block text-gradient-blue mt-1">Grow Faster.</span>
+                Results-Driven Digital Marketing Agency With <span className="text-[#005FFF]">18+ Years of Experience</span>
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="mx-auto lg:mx-0 max-w-xl text-lg text-zinc-300 leading-relaxed"
+                className="mx-auto lg:mx-0 max-w-xl text-base text-zinc-700 leading-relaxed font-medium"
               >
-                AI-Powered SEO solutions that help businesses dominate Google search results, capture warm buyer leads, and scale organic revenues.
+                We create data-backed digital marketing strategies to empower your next business evolution. Rank Higher. Grow Faster.
               </motion.p>
 
-              <motion.div
+              {/* Free Proposal Form */}
+              <motion.form
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4"
+                onSubmit={handleHeroSubmit}
+                className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0 bg-white p-2 rounded-2xl shadow-lg border border-[#051A41]/10"
               >
-                <Link
-                  href="/audit"
-                  className="rounded-full bg-gradient-to-r from-primary to-secondary px-8 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:scale-105 active:scale-95 flex items-center justify-center gap-2 group"
+                <div className="relative flex-1">
+                  <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#005FFF]" />
+                  <input
+                    type="url"
+                    required
+                    value={heroUrl}
+                    onChange={(e) => setHeroUrl(e.target.value)}
+                    placeholder="Enter Website URL (e.g. https://yoursite.com)"
+                    className="w-full pl-10 pr-4 py-3 text-sm text-[#051A41] bg-transparent outline-none placeholder:text-zinc-400 font-medium"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-[#FF5800] hover:bg-[#e04d00] px-6 py-3 text-sm font-extrabold text-white shadow-md transition-transform hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 shrink-0"
                 >
-                  <span>Start Free Audit</span>
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10 hover:border-white/20 flex items-center justify-center gap-2"
-                >
-                  <span>Book Strategy Call</span>
-                </Link>
-              </motion.div>
+                  <span>Get Free Proposal</span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </motion.form>
             </div>
 
-            {/* Right Hero Dashboard Preview */}
+            {/* Right Hero Interactive Dashboard */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -187,203 +200,235 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SERVICES SECTION */}
-        <section id="services" className="relative z-10 py-24 border-t border-white/5 bg-[#030612]/40">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-primary">Our Expertise</h2>
-              <h3 className="text-3xl font-bold text-white sm:text-4xl">Comprehensive SEO Services</h3>
-              <p className="text-zinc-400 text-sm">
-                From tech structures to automated off-page outreach, our platform manages all aspects of organic performance.
-              </p>
-            </div>
+        {/* OFFICIAL PARTNERS & BRANDS SHOWCASE */}
+        <PartnerLogos />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {services.map((srv, idx) => {
-                const Icon = srv.icon;
-                return (
-                  <GlowingCard
-                    key={srv.title}
-                    glowColor="rgba(0, 194, 255, 0.08)"
-                    className="p-6 flex flex-col gap-4 border-white/5 bg-[#0a0f26]/30 text-left transition hover:border-primary/20"
-                  >
-                    <div className="rounded-lg bg-primary/10 p-2.5 text-primary w-fit">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h4 className="text-base font-bold text-white">{srv.title}</h4>
-                    <p className="text-xs text-zinc-400 leading-relaxed">{srv.desc}</p>
-                  </GlowingCard>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* WHY CHOOSE SKYRANK */}
-        <section className="relative z-10 py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* ARE YOU FRUSTRATED SECTION */}
+        <section className="py-20 bg-[#051A41] text-white relative overflow-hidden">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              {/* Left Side Static Content */}
-              <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-primary">The Difference</h2>
-                <h3 className="text-3xl font-bold text-white sm:text-4xl">Why Scale With SkyRank?</h3>
+              {/* Left Box - Frustrations */}
+              <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md">
+                <h2 className="text-3xl font-extrabold text-white leading-tight mb-4">
+                  Are You <span className="text-[#FF5800]">Frustrated</span> With Your SEO Growth?
+                </h2>
+                <ul className="space-y-4 text-sm font-medium text-zinc-300">
+                  <li className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>Google Keeps Changing Its Algorithms Unexpectedly</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>Poorly Designed Competitor Sites Outranking You</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>Frustrated With Stagnant Organic Search Traffic & Sales</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Right Box - Effective Marketing Solutions */}
+              <div className="lg:col-span-7 space-y-6">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#005FFF] bg-[#005FFF]/20 px-3.5 py-1 rounded-full border border-[#005FFF]/30">
+                  Effective Solutions
+                </span>
+                <h3 className="text-3xl font-extrabold text-white">We Bring You Result-Oriented Growth</h3>
                 <p className="text-zinc-300 text-sm leading-relaxed">
-                  We built our framework to bridge the gap between slow manual agencies and raw unguided software. Get elite AI tools combined with top SEO consultant support.
+                  Being a renowned SEO solutions agency, we offer advanced positioning techniques to increase your brand visibility and the organic revenue you deserve.
                 </p>
-                <div className="pt-4 flex flex-wrap gap-4 justify-center lg:justify-start text-xs font-semibold text-zinc-400">
-                  <span className="flex items-center gap-1.5"><CheckCircle className="h-4 w-4 text-secondary" /> 500k+ Keywords Ranked</span>
-                  <span className="flex items-center gap-1.5"><CheckCircle className="h-4 w-4 text-secondary" /> 98% Client Retention</span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                    <div className="flex items-center gap-2 text-[#005FFF]">
+                      <CheckCircle className="h-4 w-4" />
+                      <h4 className="font-bold text-white text-sm">Dedicated Growth Manager</h4>
+                    </div>
+                    <p className="text-xs text-zinc-400">An experienced marketing manager leads your account to maximize organic conversions.</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                    <div className="flex items-center gap-2 text-[#005FFF]">
+                      <CheckCircle className="h-4 w-4" />
+                      <h4 className="font-bold text-white text-sm">Top-Of-the-Line Support</h4>
+                    </div>
+                    <p className="text-xs text-zinc-400">Constant transparency and rapid communication set our team apart.</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                    <div className="flex items-center gap-2 text-[#005FFF]">
+                      <CheckCircle className="h-4 w-4" />
+                      <h4 className="font-bold text-white text-sm">Data-Backed Strategies</h4>
+                    </div>
+                    <p className="text-xs text-zinc-400">Detailed weekly reports with main performance indicators to track campaign ROI.</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                    <div className="flex items-center gap-2 text-[#FF5800]">
+                      <CheckCircle className="h-4 w-4" />
+                      <h4 className="font-bold text-white text-sm">Transparent Execution</h4>
+                    </div>
+                    <p className="text-xs text-zinc-400">Clear roadmap plotting every milestone before charging forward.</p>
+                  </div>
                 </div>
               </div>
-
-              {/* Right Side Grid */}
-              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {whyChooseUs.map((item, idx) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={idx} className="flex gap-4 rounded-xl border border-white/5 bg-white/5 p-5">
-                      <div className="rounded-lg bg-secondary/10 p-2 text-secondary shrink-0 h-fit">
-                        <Icon className="h-4.5 w-4.5" />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold text-white">{item.title}</h4>
-                        <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{item.desc}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </section>
 
-        {/* FEATURES GRID SECTION */}
-        <section className="relative z-10 py-24 border-t border-white/5 bg-[#030612]/30">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-primary">Core Platform</h2>
-              <h3 className="text-3xl font-bold text-white sm:text-4xl">Built-In Enterprise Features</h3>
-              <p className="text-zinc-400 text-sm">
-                Get full access to all rank optimization utilities directly inside a unified dashboard.
-              </p>
-            </div>
+        {/* SERVICES GRID SECTION */}
+        <section id="services" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#005FFF]">Digital Marketing Services</span>
+            <h3 className="text-3xl font-extrabold text-[#051A41] sm:text-4xl">SEO Management & Strategy Services</h3>
+            <p className="text-zinc-600 text-sm">
+              Our certified managers engineer top-tier search strategies to achieve the rank positioning you need.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-              {features.map((feat, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((srv, idx) => {
+              const Icon = srv.icon;
+              return (
                 <GlowingCard
-                  key={idx}
-                  glowColor="rgba(0, 102, 255, 0.08)"
-                  className="p-5 flex flex-col justify-between border-white/5 bg-[#070c20]/50"
+                  key={srv.title}
+                  glowColor="rgba(0, 95, 255, 0.12)"
+                  className="p-6 flex flex-col justify-between bg-white border-[#051A41]/10 text-left hover:border-[#005FFF]"
                 >
-                  <div>
-                    <h4 className="text-sm font-bold text-white">{feat.title}</h4>
-                    <p className="text-[11px] text-zinc-400 mt-2 leading-relaxed">{feat.desc}</p>
+                  <div className="space-y-4">
+                    <div className="rounded-xl bg-[#005FFF]/10 p-3 text-[#005FFF] w-fit">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <h4 className="text-lg font-extrabold text-[#051A41]">{srv.title}</h4>
+                    <p className="text-xs text-zinc-600 leading-relaxed font-medium">{srv.desc}</p>
                   </div>
-                  <span className="text-[10px] font-mono text-zinc-600 block mt-4 select-none">FT_0{idx + 1}</span>
+                  <Link
+                    href={srv.href}
+                    className="inline-flex items-center gap-1 text-xs font-extrabold text-[#FF5800] mt-6 hover:text-[#e04d00]"
+                  >
+                    <span>Learn More</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
                 </GlowingCard>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* NUMBERS STATS COUNTER SECTION */}
+        <section className="py-16 bg-[#005FFF] text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-extrabold">Let's Talk Numbers</h2>
+              <p className="text-sm opacity-90 mt-1">Experience and Mindset in Building Search Success</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {stats.map((st, i) => (
+                <div key={i} className="p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+                  <span className="text-4xl sm:text-5xl font-extrabold block text-amber-300">{st.value}</span>
+                  <span className="text-xs font-bold uppercase tracking-wider block mt-2 opacity-90">{st.label}</span>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* PRICING SECTION */}
-        <section id="pricing" className="relative z-10 py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-primary font-bold">Pricing Plans</h2>
-              <h3 className="text-3xl font-bold text-white sm:text-4xl">Flexible, Transparent Pricing</h3>
-              <p className="text-zinc-400 text-sm">
-                Choose the suite size that fits your business. Cancel or change plans at any time.
-              </p>
-            </div>
+        {/* TIMELINE OF OUR JOURNEY SECTION */}
+        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#005FFF]">Our Journey</span>
+            <h3 className="text-3xl font-extrabold text-[#051A41] sm:text-4xl">A Timeline of SkyRank Solution</h3>
+            <p className="text-zinc-600 text-sm">From initial inception to international growth hubs across India & UAE.</p>
+          </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {timeline.map((item, idx) => (
+              <div key={idx} className="p-6 rounded-2xl bg-white border border-[#051A41]/10 shadow-md flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-extrabold text-[#005FFF] block">0{idx + 1}</span>
+                  <span className="text-3xl font-extrabold text-[#FF5800] block mt-1">{item.year}</span>
+                  <h4 className="text-base font-extrabold text-[#051A41] mt-2">{item.title}</h4>
+                  <p className="text-xs text-zinc-600 mt-2 leading-relaxed font-medium">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PRICING SECTION */}
+        <section id="pricing" className="py-20 bg-white border-y border-[#051A41]/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-[#005FFF]">Pricing Plans</span>
+              <h3 className="text-3xl font-extrabold text-[#051A41] sm:text-4xl">Flexible, Transparent Pricing</h3>
+              <p className="text-zinc-600 text-sm">Choose the suite size that fits your business goals. Upgrade or cancel anytime.</p>
+            </div>
             <PricingSection />
           </div>
         </section>
 
-        {/* INSTANT AUDIT SECTION */}
-        <section id="audit" className="relative z-10 py-24 border-t border-white/5 bg-[#030612]/40">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-secondary font-bold">SEO Audit Scanner</h2>
-                <h3 className="text-3xl font-bold text-white sm:text-4xl">Test Your Page Crawl Score Now</h3>
-                <p className="text-zinc-300 text-sm leading-relaxed">
-                  Enter your website URL to trigger a live crawl scan. Review ranking bottlenecks, mobile performance issues, and meta errors immediately.
-                </p>
-                <div className="flex flex-col gap-3 max-w-xs mx-auto lg:mx-0 text-xs text-zinc-400 text-left">
-                  <div className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-secondary" /> Crawls in under 60 seconds</div>
-                  <div className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-secondary" /> Lists critical Core Web Vitals fixes</div>
-                  <div className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-secondary" /> Suggests schema structured codes</div>
-                </div>
+        {/* AUDIT SECTION */}
+        <section id="audit" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-[#FF5800] bg-[#FF5800]/10 px-3.5 py-1 rounded-full border border-[#FF5800]/20">
+                Free SEO Scanner
+              </span>
+              <h3 className="text-3xl font-extrabold text-[#051A41] sm:text-4xl">Test Your Page Crawl Score Now</h3>
+              <p className="text-zinc-600 text-sm leading-relaxed">
+                Enter your website URL to trigger a live crawl scan. Review ranking bottlenecks, mobile performance issues, and metadata errors.
+              </p>
+              <div className="space-y-2 text-xs font-bold text-[#051A41] text-left max-w-xs mx-auto lg:mx-0">
+                <div className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-[#005FFF]" /> Crawls site in under 60 seconds</div>
+                <div className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-[#005FFF]" /> Identifies Core Web Vitals fixes</div>
+                <div className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-[#FF5800]" /> Generates JSON-LD schema snippets</div>
               </div>
+            </div>
 
-              <div className="lg:col-span-7">
-                <AuditForm />
-              </div>
+            <div className="lg:col-span-7">
+              <AuditForm />
             </div>
           </div>
         </section>
 
-        {/* TESTIMONIALS SECTION */}
-        <section className="relative z-10 py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-primary font-bold">Testimonials</h2>
-              <h3 className="text-3xl font-bold text-white sm:text-4xl">What Our Clients Say</h3>
-              <p className="text-zinc-400 text-sm">
-                Hear from the marketing directors, founders, and developers who scale their organic pipelines with us.
-              </p>
+        {/* TESTIMONIALS */}
+        <section className="py-24 bg-white border-t border-[#051A41]/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-[#005FFF]">Client Reviews</span>
+              <h3 className="text-3xl font-extrabold text-[#051A41] sm:text-4xl">Reviews From Our Customers</h3>
+              <p className="text-zinc-600 text-sm">Hear directly from business leaders who scale organic pipelines with SkyRank Solution.</p>
             </div>
-
             <TestimonialsCarousel />
           </div>
         </section>
 
-        {/* FAQ SECTION */}
-        <section className="relative z-10 py-24 border-t border-white/5 bg-[#030612]/30">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-primary font-bold">FAQ</h2>
-              <h3 className="text-3xl font-bold text-white sm:text-4xl">Frequently Asked Questions</h3>
-              <p className="text-zinc-400 text-sm">
-                Find quick answers to common questions about our platform, timeline, and SEO compliance guidelines.
-              </p>
-            </div>
-
-            <FAQAccordion items={faqs} />
+        {/* FAQ */}
+        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#005FFF]">FAQ</span>
+            <h3 className="text-3xl font-extrabold text-[#051A41] sm:text-4xl">Frequently Asked Questions</h3>
           </div>
+          <FAQAccordion items={faqs} />
         </section>
 
-        {/* FINAL CTA PANEL */}
-        <section className="relative z-10 py-20">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl bg-gradient-to-tr from-primary to-secondary p-[1px] shadow-2xl relative overflow-hidden">
-              <div className="rounded-[23px] bg-[#050816] px-8 py-16 text-center space-y-6 relative overflow-hidden">
-                {/* Visual glows */}
-                <div className="absolute -left-20 -top-20 w-44 h-44 rounded-full bg-primary/20 filter blur-[40px]"></div>
-                <div className="absolute -right-20 -bottom-20 w-44 h-44 rounded-full bg-secondary/20 filter blur-[40px]"></div>
-                
-                <h3 className="text-3xl font-bold text-white sm:text-4xl">Ready to Dominate Google Search Results?</h3>
-                <p className="text-zinc-300 text-sm max-w-xl mx-auto leading-relaxed">
-                  Start your free audit crawler or book a custom growth strategy session to double your organic leads this quarter.
-                </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-                  <Link
-                    href="/audit"
-                    className="rounded-full bg-gradient-to-r from-primary to-secondary px-8 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:scale-105 active:scale-95 flex items-center justify-center gap-1.5 group"
-                  >
-                    <span>Start Free Audit</span>
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition"
-                  >
-                    Contact Sales Team
-                  </Link>
-                </div>
-              </div>
+        {/* FINAL CTA BANNER */}
+        <section className="py-20 bg-[#051A41] text-white">
+          <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
+            <h3 className="text-3xl font-extrabold sm:text-4xl">Improve Your Search Ranking Now!</h3>
+            <p className="text-zinc-300 text-sm max-w-xl mx-auto">
+              Reach out to our expert digital marketing consultants to discuss how SkyRank Solution can help you achieve your revenue goals.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+              <Link
+                href="/audit"
+                className="rounded-full bg-[#FF5800] hover:bg-[#e04d00] px-8 py-3.5 text-sm font-extrabold text-white shadow-md transition hover:scale-105"
+              >
+                Get Started Now
+              </Link>
+              <Link
+                href="/contact"
+                className="rounded-full border border-white/20 bg-white/10 px-8 py-3.5 text-sm font-bold text-white hover:bg-white/20 transition"
+              >
+                Connect With Expert
+              </Link>
             </div>
           </div>
         </section>
@@ -393,3 +438,4 @@ export default function Home() {
     </>
   );
 }
+

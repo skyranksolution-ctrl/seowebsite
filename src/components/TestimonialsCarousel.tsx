@@ -68,33 +68,33 @@ export default function TestimonialsCarousel() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5, delay: idx * 0.1 }}
         >
-          <GlowingCard glowColor="rgba(0, 194, 255, 0.1)" className="p-6 h-full flex flex-col justify-between">
+          <GlowingCard glowColor="rgba(0, 95, 255, 0.1)" className="p-6 h-full flex flex-col justify-between bg-white/90 border-[#051A41]/10">
             <div className="space-y-4">
-              {/* Rating stars */}
-              <div className="flex gap-1 text-yellow-400">
+              {/* Rating stars (#FF5800 Orange) */}
+              <div className="flex gap-1 text-[#FF5800]">
                 {[...Array(test.rating)].map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-current" />
                 ))}
               </div>
               
-              {/* Quote text */}
-              <p className="text-zinc-300 text-sm leading-relaxed relative">
+              {/* Quote text (#051A41 Navy) */}
+              <p className="text-[#051A41]/90 text-sm leading-relaxed relative">
                 &ldquo;{test.text}&rdquo;
               </p>
             </div>
 
             {/* Author info */}
-            <div className="flex items-center gap-3 mt-6 pt-4 border-t border-white/5">
-              <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-primary to-secondary p-[1px] flex items-center justify-center text-white font-bold text-sm">
+            <div className="flex items-center gap-3 mt-6 pt-4 border-t border-[#051A41]/10">
+              <div className="h-10 w-10 rounded-full bg-[#005FFF] flex items-center justify-center text-white font-extrabold text-xs shadow-sm">
                 {test.name.split(" ").map(n => n[0]).join("")}
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-white">{test.name}</h4>
+                <h4 className="text-sm font-extrabold text-[#051A41]">{test.name}</h4>
                 <p className="text-xs text-zinc-500">
-                  {test.role}, <span className="text-zinc-400">{test.company}</span>
+                  {test.role}, <span className="text-[#005FFF] font-medium">{test.company}</span>
                 </p>
               </div>
-              <MessageSquareQuote className="h-5 w-5 text-primary/30 ml-auto" />
+              <MessageSquareQuote className="h-5 w-5 text-[#005FFF]/40 ml-auto" />
             </div>
           </GlowingCard>
         </motion.div>
@@ -102,3 +102,4 @@ export default function TestimonialsCarousel() {
     </div>
   );
 }
+
