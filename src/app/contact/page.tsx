@@ -90,8 +90,8 @@ export default function ContactPage() {
                     <MapPin className="h-5 w-5 text-[#005FFF] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#051A41] block text-sm">SkyRank Solution HQ</span>
-                      <span>Welldone Tech Park, Sector 48, Gurugram, India</span>
-                      <span className="block">UAE Office: Prism Tower, Business Bay, Dubai</span>
+                      <span>GALAXY SIGNATURE, 26, Science City Rd, Sola, Ahmedabad, Gujarat 380060</span>
+                      <span className="block">UAE Office: GALAXY SIGNATURE, 26, Science City Rd, Sola, Ahmedabad, Gujarat 380060</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
